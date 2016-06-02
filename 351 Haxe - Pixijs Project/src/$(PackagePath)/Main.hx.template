@@ -1,0 +1,14 @@
+package $(PackageName);
+
+import pixi.plugins.app.Application;
+
+/**
+$(CBI)* @author $(DefaultUser)
+$(CBI)*/
+class Main extends Application $(CSLB){
+	
+	static function main() $(CSLB){
+		
+	}
+	
+}
