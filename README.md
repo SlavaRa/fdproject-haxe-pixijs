@@ -1,1 +1,2 @@
-# Haxe Pixijs Application Project Template for FlashDevelop
+Haxe PixiJS v4.x Application Project Template for [FlashDevelop](http://www.flashdevelop.org)
+========================
