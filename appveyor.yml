@@ -1,0 +1,47 @@
+os: Visual Studio 2015
+environment:
+  VERSION: 1.0
+  NAME: 331 Haxe - PixiJS Project
+  DESC: A Pixijs v4.x project written in the Haxe language
+  INFO: https:\/\/github.com\/SlavaRa\/haxe-pixijs-fd-project
+  GITHUB_RELEASES: https:\/\/github.com\/SlavaRa\/haxe-pixijs-fd-project\/releases
+  APPMAN_TEMPLATE: appman.template
+  APPMAN_CONFIG_XML: appman.txt
+version: $(VERSION).{build}
+skip_tags: true
+matrix:
+  fast_finish: true
+build: off
+after_build:
+- cd %APPVEYOR_BUILD_FOLDER%
+- 7z a %NAME%.fdz $(BaseDir)\
+- mv %NAME%.zip %NAME%.fdz
+- md5sum %NAME%.fdz > checksum.md5
+- sed -e "s/.//" checksum.md5 > checksum.tmp.md5 && mv checksum.tmp.md5 checksum.md5
+- sed -e "s/ .*//" checksum.md5 > checksum.tmp.md5 && mv checksum.tmp.md5 checksum.md5
+- set /p CHECKSUM=<checksum.md5
+- rm checksum.md5
+- mv %APPMAN_TEMPLATE% %APPMAN_CONFIG_XML%
+- sed -i -e s/_ID_/ /g %APPMAN_CONFIG_XML%
+- sed -i -e "s/_NAME_/%NAME%/g" %APPMAN_CONFIG_XML%
+- sed -i -e "s/_DESC_/%DESC%/g" %APPMAN_CONFIG_XML%
+- sed -i -e "s/_VERSION_/%VERSION%/g" %APPMAN_CONFIG_XML%
+- sed -i -e "s/_BUILD_/%APPVEYOR_BUILD_NUMBER%/g" %APPMAN_CONFIG_XML%
+- sed -i -e "s/_INFO_/%INFO%/g" %APPMAN_CONFIG_XML%
+- sed -i -e "s/_URL_/%GITHUB_RELEASES%\/download\/%APPVEYOR_BUILD_VERSION%\/%NAME%.fdz/g" %APPMAN_CONFIG_XML%
+- sed -i -e "s/_CHECKSUM_/%CHECKSUM%/g" %APPMAN_CONFIG_XML%
+artifacts:
+- path: $(NAME).fdz
+  name: $(NAME)
+  type: zip
+- path: $(APPMAN_CONFIG_XML)
+  name: appman
+  type: txt
+deploy:
+- provider: GitHub
+  release: $(appveyor_build_version)
+  auth_token:
+    secure: HK9ej9WVysHQHeTEQ/QTOJmh08xCtDQyDBy5uXWrWV/xROMNkQrTeQv1j2tYOxVw
+  artifact: /(.*\.fdz)|(appman.txt)/
+  on:
+    branch: master
