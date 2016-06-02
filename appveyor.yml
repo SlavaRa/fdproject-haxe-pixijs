@@ -12,6 +12,8 @@ skip_tags: true
 matrix:
   fast_finish: true
 before_build:
+build: off
+build_script:
 - cd %APPVEYOR_BUILD_FOLDER%
 - 7z a %NAME%.fdz $(BaseDir)\
 - mv %NAME%.zip %NAME%.fdz
@@ -29,8 +31,6 @@ before_build:
 - sed -i -e "s/_INFO_/%INFO%/g" %APPMAN_CONFIG_XML%
 - sed -i -e "s/_URL_/%GITHUB_RELEASES%\/download\/%APPVEYOR_BUILD_VERSION%\/%NAME%.fdz/g" %APPMAN_CONFIG_XML%
 - sed -i -e "s/_CHECKSUM_/%CHECKSUM%/g" %APPMAN_CONFIG_XML%
-build: off
-build_script:
 after_build:
 artifacts:
 - path: $(NAME).fdz
