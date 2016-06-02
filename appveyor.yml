@@ -14,7 +14,10 @@ matrix:
 before_build:
 build: off
 build_script:
+- pwd
+- ls
 - cd %APPVEYOR_BUILD_FOLDER%
+- ls
 - 7z a %NAME%.fdz $(BaseDir)\
 - mv %NAME%.zip %NAME%.fdz
 - md5sum %NAME%.fdz > checksum.md5
