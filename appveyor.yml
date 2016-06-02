@@ -22,7 +22,7 @@ build_script:
 - set /p CHECKSUM=<checksum.md5
 - rm checksum.md5
 - mv %APPMAN_TEMPLATE% %APPMAN_CONFIG_XML%
-- sed -i -e s/_ID_/ /g %APPMAN_CONFIG_XML%
+- sed -i -e s/_ID_/template/g %APPMAN_CONFIG_XML%
 - sed -i -e "s/_NAME_/%NAME%/g" %APPMAN_CONFIG_XML%
 - sed -i -e "s/_DESC_/%DESC%/g" %APPMAN_CONFIG_XML%
 - sed -i -e "s/_VERSION_/%VERSION%/g" %APPMAN_CONFIG_XML%
