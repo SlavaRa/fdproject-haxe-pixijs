@@ -14,7 +14,7 @@ matrix:
 before_build:
 build: off
 build_script:
-- 7z a %NAME%.fdz $(BaseDir)
+- 7z a "%NAME%".fdz $(BaseDir)
 - mv %NAME%.zip %NAME%.fdz
 - md5sum %NAME%.fdz > checksum.md5
 - sed -e "s/.//" checksum.md5 > checksum.tmp.md5 && mv checksum.tmp.md5 checksum.md5
