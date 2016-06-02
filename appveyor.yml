@@ -11,7 +11,9 @@ version: $(VERSION).{build}
 skip_tags: true
 matrix:
   fast_finish: true
+before_build:
 build: off
+build_script:
 after_build:
 - cd %APPVEYOR_BUILD_FOLDER%
 - 7z a %NAME%.fdz $(BaseDir)\
