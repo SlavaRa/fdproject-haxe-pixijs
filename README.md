@@ -5,7 +5,7 @@ Haxe [PixiJS v4.0.1](https://github.com/pixijs/pixi-haxe) Application Project Te
 
 Download [the latest release](https://github.com/SlavaRa/haxe-pixijs-fd-project/releases). Open the .fdz file with FlashDevelop/HaxeDevelop.
 	
-	### Requirements 
+### Requirements 
 
 haxelib [pixijs](http://lib.haxe.org/p/pixijs/)
 
