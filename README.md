@@ -3,6 +3,4 @@ Haxe [PixiJS v4.x](https://github.com/pixijs/pixi-haxe) Application Project Temp
 
 ### Installation
 
-Download the latest release. Open the .fdz file with FlashDevelop/HaxeDevelop.
-
-https://github.com/SlavaRa/haxe-pixijs-fd-project/releases
+Download [the latest release](https://github.com/SlavaRa/haxe-pixijs-fd-project/releases). Open the .fdz file with FlashDevelop/HaxeDevelop.
