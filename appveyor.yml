@@ -1,19 +1,28 @@
 os: Visual Studio 2015
 environment:
-  VERSION: 1.0
+  VERSION: 4.2.1
   NAME: 331 Haxe - PixiJS Project
-  DESC: A Pixijs v4.x project written in the Haxe language
-  INFO: https:\/\/github.com\/SlavaRa\/haxe-pixijs-fd-project
-  GITHUB_RELEASES: https:\/\/github.com\/SlavaRa\/haxe-pixijs-fd-project\/releases
+  DESC: A PixiJS v4.x project written in the Haxe language
+  INFO: https:\/\/github.com\/SlavaRa\/fdproject-haxe-pixijs
+  GITHUB_RELEASES: https:\/\/github.com\/SlavaRa\/fdproject-haxe-pixijs\/releases
   APPMAN_TEMPLATE: appman.template
   APPMAN_CONFIG_XML: appman.txt
+  LIB_PATH: C:\projects\haxelib-pixijs
 version: $(VERSION).{build}
 skip_tags: true
+init:
+- git clone -q --branch=master https://github.com/pixijs/pixi-haxe.git "%LIB_PATH%"
+- cd "%LIB_PATH%"
+- git checkout tags/"%VERSION%" -b "%VERSION%"
 matrix:
   fast_finish: true
 before_build:
 build: off
 build_script:
+- copy "%LIB_PATH%"/libs/perf.min.js $(BaseDir)/Projects/"%NAME%"/bin/perf.min.js
+- copy "%LIB_PATH%"/libs/pixi-spine.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi-spine.min.js
+- copy "%LIB_PATH%"/libs/pixi-tilemap.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi-tilemap.min.js
+- copy "%LIB_PATH%"/libs/pixi.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi.min.js
 - 7z a "%NAME%".zip $(BaseDir)
 - mv "%NAME%".zip "%NAME%".fdz
 - md5sum "%NAME%".fdz > checksum.md5
