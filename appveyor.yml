@@ -14,15 +14,16 @@ init:
 - git clone -q --branch=master https://github.com/pixijs/pixi-haxe.git "%LIB_PATH%"
 - cd "%LIB_PATH%"
 - git checkout tags/"%VERSION%" -b "%VERSION%"
+- cd %APPVEYOR_BUILD_FOLDER%
 matrix:
   fast_finish: true
 before_build:
 build: off
 build_script:
-- copy "%LIB_PATH%"/libs/perf.min.js $(BaseDir)/Projects/"%NAME%"/bin/perf.min.js
-- copy "%LIB_PATH%"/libs/pixi-spine.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi-spine.min.js
-- copy "%LIB_PATH%"/libs/pixi-tilemap.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi-tilemap.min.js
-- copy "%LIB_PATH%"/libs/pixi.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi.min.js
+- cp "%LIB_PATH%"/libs/perf.min.js $(BaseDir)/Projects/"%NAME%"/bin/perf.min.js
+- cp "%LIB_PATH%"/libs/pixi-spine.js $(BaseDir)/Projects/"%NAME%"/bin/pixi-spine.js
+- cp "%LIB_PATH%"/libs/pixi-tilemap.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi-tilemap.min.js
+- cp "%LIB_PATH%"/libs/pixi.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi.min.js
 - 7z a "%NAME%".zip $(BaseDir)
 - mv "%NAME%".zip "%NAME%".fdz
 - md5sum "%NAME%".fdz > checksum.md5
