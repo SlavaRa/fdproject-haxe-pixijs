@@ -1,19 +1,38 @@
 os: Visual Studio 2015
 environment:
-  VERSION: 1.0
+  VERSION: 4.5.4
   NAME: 331 Haxe - PixiJS Project
-  DESC: A Pixijs v4.x project written in the Haxe language
-  INFO: https:\/\/github.com\/SlavaRa\/haxe-pixijs-fd-project
-  GITHUB_RELEASES: https:\/\/github.com\/SlavaRa\/haxe-pixijs-fd-project\/releases
+  DESC: A PixiJS v4.x project written in the Haxe language
+  INFO: https:\/\/github.com\/SlavaRa\/fdproject-haxe-pixijs
+  GITHUB_RELEASES: https:\/\/github.com\/SlavaRa\/fdproject-haxe-pixijs\/releases
   APPMAN_TEMPLATE: appman.template
   APPMAN_CONFIG_XML: appman.txt
+  LIB_PATH: C:\projects\haxelib-pixijs
 version: $(VERSION).{build}
 skip_tags: true
+init:
+- git clone -q --branch=master https://github.com/pixijs/pixi-haxe.git "%LIB_PATH%"
+- cd "%LIB_PATH%"
+- git checkout tags/"%VERSION%" -b "%VERSION%"
+- cd %APPVEYOR_BUILD_FOLDER%
 matrix:
   fast_finish: true
 before_build:
 build: off
 build_script:
+- cp "%LIB_PATH%"/libs/dragonBones.js $(BaseDir)/Projects/"%NAME%"/bin/dragonBones.js
+- cp "%LIB_PATH%"/libs/dragonBones.min.js $(BaseDir)/Projects/"%NAME%"/bin/dragonBones.min.js
+- cp "%LIB_PATH%"/libs/dragonBonesPixi.js $(BaseDir)/Projects/"%NAME%"/bin/dragonBonesPixi.js
+- cp "%LIB_PATH%"/libs/dragonBonesPixi.min.js $(BaseDir)/Projects/"%NAME%"/bin/dragonBonesPixi.min.js
+- cp "%LIB_PATH%"/libs/perf.min.js $(BaseDir)/Projects/"%NAME%"/bin/perf.min.js
+- cp "%LIB_PATH%"/libs/pixi-extras-filters.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi-extras-filters.min.js
+- cp "%LIB_PATH%"/libs/pixi-spine.js $(BaseDir)/Projects/"%NAME%"/bin/pixi-spine.js
+- cp "%LIB_PATH%"/libs/pixi-spine.js.map $(BaseDir)/Projects/"%NAME%"/bin/pixi-spine.js.map
+- cp "%LIB_PATH%"/libs/pixi-tilemap.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi-tilemap.min.js
+- cp "%LIB_PATH%"/libs/pixi.js $(BaseDir)/Projects/"%NAME%"/bin/pixi.js
+- cp "%LIB_PATH%"/libs/pixi.js.map $(BaseDir)/Projects/"%NAME%"/bin/pixi.js.map
+- cp "%LIB_PATH%"/libs/pixi.min.js $(BaseDir)/Projects/"%NAME%"/bin/pixi.min.js
+- cp "%LIB_PATH%"/libs/pixi.min.js.map $(BaseDir)/Projects/"%NAME%"/bin/pixi.min.js.map
 - 7z a "%NAME%".zip $(BaseDir)
 - mv "%NAME%".zip "%NAME%".fdz
 - md5sum "%NAME%".fdz > checksum.md5
@@ -22,7 +41,7 @@ build_script:
 - set /p CHECKSUM=<checksum.md5
 - rm checksum.md5
 - mv %APPMAN_TEMPLATE% %APPMAN_CONFIG_XML%
-- sed -i -e s/_ID_/template/g %APPMAN_CONFIG_XML%
+- sed -i -e "s/_ID_/template/g" %APPMAN_CONFIG_XML%
 - sed -i -e "s/_NAME_/%NAME%/g" %APPMAN_CONFIG_XML%
 - sed -i -e "s/_DESC_/%DESC%/g" %APPMAN_CONFIG_XML%
 - sed -i -e "s/_VERSION_/%VERSION%/g" %APPMAN_CONFIG_XML%
