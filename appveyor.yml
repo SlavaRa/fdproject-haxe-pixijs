@@ -49,7 +49,7 @@ deploy:
 - provider: GitHub
   release: $(appveyor_build_version)
   auth_token:
-    secure: eb7b986e2e98c5e08737e8c04ec099ffd71d4862
+    secure: HK9ej9WVysHQHeTEQ/QTOJmh08xCtDQyDBy5uXWrWV/xROMNkQrTeQv1j2tYOxVw
   artifact: /(.*\.fdz)|(appman.txt)/
   on:
     branch: master
